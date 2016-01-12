@@ -231,7 +231,7 @@ public class PersonCollectionResource {
         //Instantiate and initialize a new twitter status update
         StatusUpdate statusUpdate = new StatusUpdate(
                 //your tweet or status message
-                "Hello World - Java + Twitter API");
+                "@andrebonte you know that SOAP is the best !");
         
         //attach any media, if you want to
         /*
