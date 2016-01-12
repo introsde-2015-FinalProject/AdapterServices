@@ -255,12 +255,11 @@ public class PersonCollectionResource {
         System.out.println("status.getUserMentionEntities() = " + Arrays.toString(status.getUserMentionEntities()));
     	
     	
-    	
-    	
-    	
-    	
-		
-    	return null;
+        
+        
+        
+        
+    	return status.getText();
     	
     	
     	/*
