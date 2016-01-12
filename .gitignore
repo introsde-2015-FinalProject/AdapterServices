@@ -21,4 +21,4 @@ ivy/
 WebContent/WEB-INF/lib
 *.log
 *.sqlite
-TokenConnection.java
+src/introsde/finalproject/rest/ad/resources/TokenConnection.java
