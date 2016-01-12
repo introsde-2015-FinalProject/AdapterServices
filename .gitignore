@@ -21,3 +21,4 @@ ivy/
 WebContent/WEB-INF/lib
 *.log
 *.sqlite
+TokenConnection.java
