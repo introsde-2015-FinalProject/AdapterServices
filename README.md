@@ -20,9 +20,9 @@ Get current weather data for one location.
 
 | Parameter | Description | Required? |
 |-----------|-------------|-----------|
-| city | {Trento},{it} location and nation code for which get current weather data  | YES |
-| units | <metric> type of units to use for measure  | YES |
-| mode | <json> type of return data  | YES |
+| city | {Trento,it} location and nation code for which get current weather data  | YES |
+| units | {metric} type of units to use for measure  | YES |
+| mode | {json} type of return data  | YES |
 
 ## **@GET /forecast**
 
@@ -33,6 +33,6 @@ Get weather forecast for 5 days with data every 3 hours by city name.
 
 | Parameter | Description | Required? |
 |-----------|-------------|-----------|
-| city | <Trento>,<it> location and nation code for which get forecast weather data  | YES |
-| units | <metric> type of units to use for measure  | YES |
-| mode | <json> type of return data  | YES |
+| city | {Trento,it} location and nation code for which get forecast weather data  | YES |
+| units | {metric} type of units to use for measure  | YES |
+| mode | {json} type of return data  | YES |
