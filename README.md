@@ -11,6 +11,8 @@ Get motivation joke phrase of Chuck Norris used to motivate the user.
 |-----------|-------------|-----------|
 | N/A | N/A  | N/A |
 
+---
+
 ### **@GET /weather**
 
 Get current weather data for one location.
@@ -23,6 +25,10 @@ Get current weather data for one location.
 | city | {Trento,it} location and nation code for which get current weather data  | YES |
 | units | {metric} type of units to use for measure  | YES |
 | mode | {json} type of return data  | YES |
+
+
+---
+
 
 ### **@GET /forecast**
 
