@@ -2,8 +2,8 @@
 
 # @GET /motivation
 
-|GET https://as-enigmatic-journey-9195.herokuapp.com/sdelab/person/motivation |
-|--|
+| GET https://as-enigmatic-journey-9195.herokuapp.com/sdelab/person/motivation |
+| ---------------------------------------------------------------------------- |
 
 
 
