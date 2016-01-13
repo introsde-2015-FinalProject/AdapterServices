@@ -37,14 +37,14 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.h2.util.IOUtils;
 import org.json.JSONObject;
 
-import twitter4j.*;
-import twitter4j.auth.AccessToken;
- 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import introsde.finalproject.rest.ad.resources.TokenConnection;
 
-
+//import twitter4j.*;
+//import twitter4j.auth.AccessToken;
+ 
 
 
 
@@ -66,7 +66,6 @@ import java.util.Arrays;
  * @author Carlo Nicolo'
  *
  */
-@SuppressWarnings("deprecation")
 @Stateless // will work only inside a Java EE application
 @LocalBean // will work only inside a Java EE application
 @Path("/person")
@@ -80,7 +79,10 @@ public class PersonCollectionResource {
     Request request;
     
     private WebTarget service;
+    private WebTarget service_forecast;
+    private WebTarget service_weather;
     
+    static final String openweather = "2de143494c0b295cca9337e1e96b00e0";
     
     /**
 	 * This is method allow to create an object for this class
@@ -115,13 +117,6 @@ public class PersonCollectionResource {
 		//return UriBuilder.fromUri("https://peaceful-hamlet-5616.herokuapp.com/sdelab").build(); //Andrea
 	}
 	
-	/*
-	private static URI getBaseURITwitter() {
-		String conn = "http://api.icndb.com";
-		return UriBuilder.fromUri(conn).build(); //my server
-		//return UriBuilder.fromUri("https://peaceful-hamlet-5616.herokuapp.com/sdelab").build(); //Andrea
-	}
-	*/
 	
 	/**
 	 * This method is used to create URI used to connect the cliet to the server
@@ -135,9 +130,6 @@ public class PersonCollectionResource {
 		//return UriBuilder.fromUri("https://peaceful-hamlet-5616.herokuapp.com/sdelab").build(); //Andrea
 	}
 	
-	
-	
-
     /**
      * This method is used to know the number of people
      * 
@@ -187,19 +179,95 @@ public class PersonCollectionResource {
 		//JSONObject getValue_json = new JSONObject(getAll_json.getJSONObject("value"));
     }
     
+
+    /**
+     * This method is used to know the number of people
+     * 
+     * @return String.valueOf(count) that is a String representing the number of the people
+     */
+    @GET
+    @Path("/weather")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getWeatherTest(@QueryParam("city") String city, @QueryParam("units") String metric,
+    		@QueryParam("mode") String json) {
+    	
+    	//http://127.0.1.1:5700/sdelab/person/weather?city=Trento,it&units=metric&mode=json
+    	ClientConfig clientConfig = new ClientConfig();
+		Client client = ClientBuilder.newClient(clientConfig);
+		//WebTarget service_weather = client.target(getBaseURIWeatherTest());
+		WebTarget service_weather = client.target("http://api.openweathermap.org/data/2.5/find")
+				.queryParam("q", city)
+				.queryParam("units", metric)
+				.queryParam("mode", json)
+				.queryParam("appid", openweather);
+                
+		System.out.println("Service to string  adding path" + service_weather.toString());
+		
+		this.service_weather = service_weather;
+		
+		System.out.println("Service to string  after this.service_weater adding path" + service_weather.toString());
+		
+    	//String path = "http://api.openweathermap.org/data/2.5/find?q=Trento,it&units=metric&mode=json&appid=a3dbf2f9a2ab9c24905f3ea44cb9e265";
+    	
+		Response response_weater = service_weather.request().accept(MediaType.APPLICATION_JSON).get(Response.class);
+        //System.out.println(weather);
+        System.out.println("Service_weather after adding path: " + service_weather.toString());
+        
+        
+        String jsonWeather = response_weater.readEntity(String.class);
+        System.out.println("jsonGetRandom: " + jsonWeather );
+        return jsonWeather;
+    }
     
     
+    /**
+     * This method is used to know the number of people
+     * 
+     * @return String.valueOf(count) that is a String representing the number of the people
+     */
+    @GET
+    @Path("/forecast")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getForeCast(@QueryParam("city") String city, @QueryParam("units") String metric,
+    		@QueryParam("mode") String json) {
+    	
+    	//http://127.0.1.1:5700/sdelab/person/forecast?city=Trento,it&units=metric&mode=json
+    	
+    	//http://api.openweathermap.org/data/2.5/forecast?q=Trento,it&units=metric&mode=json&appid=2de143494c0b295cca9337e1e96b00e0
+    	ClientConfig clientConfig = new ClientConfig();
+		Client client = ClientBuilder.newClient(clientConfig);
+		//WebTarget service = client.target(getBaseURIForecast());
+		WebTarget service_forecast = client.target("http://api.openweathermap.org/data/2.5/forecast")
+				.queryParam("q", city)
+				.queryParam("units", metric)
+				.queryParam("mode", json)
+				.queryParam("appid", openweather);
+		this.service_forecast = service;
+		
+		
+        System.out.println("Service to string" + service_forecast.toString());
+        Response response_forecast = service_forecast.request().accept(MediaType.APPLICATION_JSON).get(Response.class);
+        String jsonForecast = response_forecast.readEntity(String.class);
+        System.out.println("jsonGetRandom: " + jsonForecast );
+        
+        return jsonForecast;
+        
+    }
+
+    
+    
+    /*
     @GET
     @Path("/twitter")
     @Produces(MediaType.TEXT_PLAIN)
     public String getTwitter() throws MalformedURLException, IOException, TwitterException{
-    	/*
+    	
     	ClientConfig clientConfig = new ClientConfig();
 		Client client = ClientBuilder.newClient(clientConfig);
 		WebTarget service = client.target(getBaseURIChuckNorris());
 		this.service = service;
 		System.out.println("Inside the method getSuggestion()");
-		*/
+		
     	
     	
     	
@@ -234,12 +302,12 @@ public class PersonCollectionResource {
                 "@andrebonte you know that SOAP is the best !");
         
         //attach any media, if you want to
-        /*
+        
         statusUpdate.setMedia(
                 //title of media
                 "http://simpledeveloper.com"
                 , new URL("https://si0.twimg.com/profile_images/1733613899/Published_Copy_Book.jpg").openStream());
-        */
+        
  
  
         //tweet or update status
@@ -253,24 +321,12 @@ public class PersonCollectionResource {
         
         System.out.println("status.getURLEntities() = " + Arrays.toString(status.getURLEntities()));
         System.out.println("status.getUserMentionEntities() = " + Arrays.toString(status.getUserMentionEntities()));
-    	
-    	
-        
-        
-        
-        
+  
     	return status.getText();
     	
-    	
-    	/*
-        System.out.println("Getting count...");
-        String randomChuck = "/jokes/random";
-        System.out.println("Service to string" + service.toString());
-        Response response_motivation = service.path(randomChuck).request().accept(MediaType.APPLICATION_JSON).get(Response.class);
-		return randomChuck;
-        */
+        
             }
-    
+    */
 
     
     
