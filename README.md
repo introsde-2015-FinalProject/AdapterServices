@@ -20,6 +20,7 @@ Get current weather data for one location.
 
 | GET https://as-enigmatic-journey-9195.herokuapp.com/sdelab/person/weather?city=Trento,it&units=metric&mode=json |
 |:-----------------------------------------------------------------------------------------------------------------|
+| Response MediaType = TEXT_PLAIN |
 
 | Parameter | Description | Required? |
 |-----------|-------------|-----------|
@@ -37,6 +38,7 @@ Get weather forecast for 5 days with data every 3 hours by city name.
 
 | GET https://as-enigmatic-journey-9195.herokuapp.com/sdelab/person/forecast?city=Trento,it&units=metric&mode=json |
 |:------------------------------------------------------------------------------------------------------------------|
+| Response MediaType = TEXT_PLAIN |
 
 | Parameter | Description | Required? |
 |-----------|-------------|-----------|
