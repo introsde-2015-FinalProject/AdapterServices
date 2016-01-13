@@ -119,8 +119,8 @@ public class PersonCollectionResource {
     @GET
     @Path("/motivation")
     @Produces(MediaType.TEXT_PLAIN)
-    public String getSuggestion() {
-    	
+    public Response getSuggestion() {
+    	try{
     	ClientConfig clientConfig = new ClientConfig();
 		Client client = ClientBuilder.newClient(clientConfig);
 		WebTarget service = client.target(getBaseURIChuckNorris());
@@ -136,25 +136,42 @@ public class PersonCollectionResource {
         
         
         String jsonGetRandom = response_motivation.readEntity(String.class);
-        System.out.println("jsonGetRandom: " + jsonGetRandom );
         
-        JSONObject getAll_json = new JSONObject(jsonGetRandom);
-		//getAll_json.getJSONObject("value");
+        if(response_motivation.getStatus() != 200){
+        	System.out.println("Error in external service");
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+       				.entity(response_motivation.readEntity(String.class)).build();
+            }else{
+            	System.out.println("jsonGetRandom: " + jsonGetRandom );
+                
+                JSONObject getAll_json = new JSONObject(jsonGetRandom);
+        		//getAll_json.getJSONObject("value");
+                
+                System.out.println("Get json for value: " + getAll_json.getJSONObject("value"));
+                
+                JSONObject value;
+                
+                value = getAll_json.getJSONObject("value");
+                
+                System.out.println("Value as object: " + value.toString());
+                System.out.println("Joke the element of value object: " + value.getString("joke").toString());
+                
+                String value_phrase = value.getString("joke").toString();
+                System.out.println("You have a message from your friend Cuck Norris: " + value_phrase);
+                String output = "You have a message from your friend Cuck Norris: " + value_phrase;
+                
+                //return output;
+           	 	return Response.ok(output).build();
+            }
+    	}catch(Exception e){
+    		System.out.print("Error Cath motivation");
+    		return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+    				.entity("Exception in Adapter Services due to: " + e).build();
+    	}
         
-        System.out.println("Get json for value: " + getAll_json.getJSONObject("value"));
         
-        JSONObject value;
         
-        value = getAll_json.getJSONObject("value");
         
-        System.out.println("Value as object: " + value.toString());
-        System.out.println("Joke the element of value object: " + value.getString("joke").toString());
-        
-        String value_phrase = value.getString("joke").toString();
-        System.out.println("You have a message from your friend Cuck Norris: " + value_phrase);
-        String output = "You have a message from your friend Cuck Norris: " + value_phrase;
-        
-        return output;
         
         //System.out.println("JsonObject" + getAll_json.toString());
 		//JSONObject getValue_json = new JSONObject(getAll_json.getJSONObject("value"));
