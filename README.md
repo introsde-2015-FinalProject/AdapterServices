@@ -1,6 +1,7 @@
 # AdapterServices
 
 # **@GET /motivation**
+
 Get motivation joke phrase of Chuck Norris used to motivate the user.
 | GET https://as-enigmatic-journey-9195.herokuapp.com/sdelab/person/motivation |
 | ---------------------------------------------------------------------------- |
@@ -10,9 +11,10 @@ Get motivation joke phrase of Chuck Norris used to motivate the user.
 | N/A | N/A  | N/A |
 
 # **@GET /weather**
-Get current weather data for one location
+
+Get current weather data for one location.
 | GET https://as-enigmatic-journey-9195.herokuapp.com/sdelab/person/weather?city=Trento,it&units=metric&mode=json |
-| ---------------------------------------------------------------------------- |
+| --------------------------------------------------------------------------------------------------------------- |
 
 | Parameter | Description | Required? |
 |-----------|-------------|-----------|
@@ -21,9 +23,10 @@ Get current weather data for one location
 | mode | <json> type of return data  | YES |
 
 # **@GET /forecast**
+
 Get weather forecast for 5 days with data every 3 hours by city name.
 | GET https://as-enigmatic-journey-9195.herokuapp.com/sdelab/person/forecast?city=Trento,it&units=metric&mode=json |
-| ---------------------------------------------------------------------------- |
+| ---------------------------------------------------------------------------------------------------------------- |
 
 | Parameter | Description | Required? |
 |-----------|-------------|-----------|
