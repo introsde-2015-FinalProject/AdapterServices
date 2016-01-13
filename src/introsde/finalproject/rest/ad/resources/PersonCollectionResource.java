@@ -110,6 +110,13 @@ public class PersonCollectionResource {
 		//return UriBuilder.fromUri("https://peaceful-hamlet-5616.herokuapp.com/sdelab").build(); //Andrea
 	}
 	
+	private String errorMessage(Exception e){
+    	return "{ \n \"error\" : \"Error in Adapter Services, due to the exception: "+e+"\"}";
+    }
+	
+	private String externalErrorMessage(String e){
+    	return "{ \n \"error\" : \"Error in External services, due to the exception: "+e+"\"}";
+    }
 	
     /**
      * This method is used to get an joke motivation phrase
@@ -140,7 +147,7 @@ public class PersonCollectionResource {
         if(response_motivation.getStatus() != 200){
         	System.out.println("Error in external service");
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-       				.entity(response_motivation.readEntity(String.class)).build();
+       				.entity(externalErrorMessage(jsonGetRandom)).build();
             }else{
             	System.out.println("jsonGetRandom: " + jsonGetRandom );
                 
@@ -166,7 +173,7 @@ public class PersonCollectionResource {
     	}catch(Exception e){
     		System.out.print("Error Cath motivation");
     		return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-    				.entity("Exception in Adapter Services due to: " + e).build();
+    				.entity(errorMessage(e)).build();
     	}
         
         
@@ -191,9 +198,9 @@ public class PersonCollectionResource {
     @GET
     @Path("/weather")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getWeatherTest(@QueryParam("city") String city, @QueryParam("units") String metric,
+    public Response getWeatherTest(@QueryParam("city") String city, @QueryParam("units") String metric,
     		@QueryParam("mode") String json) {
-    	
+    	try{
     	//http://127.0.1.1:5700/sdelab/person/weather?city=Trento,it&units=metric&mode=json
     	ClientConfig clientConfig = new ClientConfig();
 		Client client = ClientBuilder.newClient(clientConfig);
@@ -212,14 +219,26 @@ public class PersonCollectionResource {
 		
     	//String path = "http://api.openweathermap.org/data/2.5/find?q=Trento,it&units=metric&mode=json&appid=a3dbf2f9a2ab9c24905f3ea44cb9e265";
     	
-		Response response_weater = service_weather.request().accept(MediaType.APPLICATION_JSON).get(Response.class);
+		Response response_weather = service_weather.request().accept(MediaType.APPLICATION_JSON).get(Response.class);
         //System.out.println(weather);
         System.out.println("Service_weather after adding path: " + service_weather.toString());
         
         
-        String jsonWeather = response_weater.readEntity(String.class);
-        System.out.println("jsonGetRandom: " + jsonWeather );
-        return jsonWeather;
+        String jsonWeather = response_weather.readEntity(String.class);
+        
+        if(response_weather.getStatus() != 200){
+        	System.out.println("Error in external service");
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+       				.entity(externalErrorMessage(jsonWeather)).build();
+            }else{
+            	System.out.println("jsonGetRandom: " + jsonWeather );
+            	return Response.ok(jsonWeather).build();
+            }
+    	}catch(Exception e){
+    		System.out.print("Error Cath motivation");
+    		return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+    				.entity(errorMessage(e)).build();
+    	}
     }
     
     
@@ -236,9 +255,9 @@ public class PersonCollectionResource {
     @GET
     @Path("/forecast")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getForeCast(@QueryParam("city") String city, @QueryParam("units") String metric,
+    public Response getForeCast(@QueryParam("city") String city, @QueryParam("units") String metric,
     		@QueryParam("mode") String json) {
-    	
+    	try{
     	//http://127.0.1.1:5700/sdelab/person/forecast?city=Trento,it&units=metric&mode=json
     	
     	//http://api.openweathermap.org/data/2.5/forecast?q=Trento,it&units=metric&mode=json&appid=2de143494c0b295cca9337e1e96b00e0
@@ -256,9 +275,20 @@ public class PersonCollectionResource {
         System.out.println("Service to string" + service_forecast.toString());
         Response response_forecast = service_forecast.request().accept(MediaType.APPLICATION_JSON).get(Response.class);
         String jsonForecast = response_forecast.readEntity(String.class);
-        System.out.println("jsonGetRandom: " + jsonForecast );
         
-        return jsonForecast;
+        if(response_forecast.getStatus() != 200){
+        	System.out.println("Error in external service");
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+       				.entity(externalErrorMessage(jsonForecast)).build();
+            }else{
+            	System.out.println("jsonGetRandom: " + jsonForecast );
+            	return Response.ok(jsonForecast).build();
+            }
+    	}catch(Exception e){
+    		System.out.print("Error Cath motivation");
+    		return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+    				.entity(errorMessage(e)).build();
+    	}
         
     }
 

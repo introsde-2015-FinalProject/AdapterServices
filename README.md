@@ -6,6 +6,7 @@ Get motivation joke phrase of Chuck Norris used to motivate the user.
 
 | GET https://as-enigmatic-journey-9195.herokuapp.com/sdelab/person/motivation |
 |:------------------------------------------------------------------------------|
+| Response MediaType = TEXT_PLAIN |
 
 | Parameter | Description | Required? |
 |-----------|-------------|-----------|
