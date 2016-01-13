@@ -1,6 +1,6 @@
 # AdapterServices
 
-## **@GET /motivation**
+### **@GET /motivation**
 
 Get motivation joke phrase of Chuck Norris used to motivate the user.
 
@@ -11,7 +11,7 @@ Get motivation joke phrase of Chuck Norris used to motivate the user.
 |-----------|-------------|-----------|
 | N/A | N/A  | N/A |
 
-## **@GET /weather**
+### **@GET /weather**
 
 Get current weather data for one location.
 
@@ -24,7 +24,7 @@ Get current weather data for one location.
 | units | {metric} type of units to use for measure  | YES |
 | mode | {json} type of return data  | YES |
 
-## **@GET /forecast**
+### **@GET /forecast**
 
 Get weather forecast for 5 days with data every 3 hours by city name.
 
