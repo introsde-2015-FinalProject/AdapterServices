@@ -84,26 +84,19 @@ public class PersonCollectionResource {
     
     static final String openweather = "2de143494c0b295cca9337e1e96b00e0";
     
-    /**
-	 * This is method allow to create an object for this class
-	 * with the param connection string that represents the address of the
-	 * server that we want interact with
+	/**
+	 * This method is used to create URI used to connect the cliet to the server
+	 * passed as String in the param
 	 * 
-	 * @param conn is the connection string representing the server that we want contact
+	 * @param conn the connection string of the server
+	 * @return 
 	 */
-	public PersonCollectionResource(){
-		//String connCarlo = "https://enigmatic-sierra-2066.herokuapp.com/sdelab";
-		
-		/*
-		ClientConfig clientConfig = new ClientConfig();
-		Client client = ClientBuilder.newClient(clientConfig);
-		WebTarget service = client.target(getBaseURIChuckNorris());
-		this.service = service;
-		System.out.println("Inside the constructor");
-		*/
-		
+	private static URI getBaseURI(String conn) {
+		return UriBuilder.fromUri(conn).build(); //my server
+		//return UriBuilder.fromUri("https://peaceful-hamlet-5616.herokuapp.com/sdelab").build(); //Andrea
 	}
-    
+	
+	
 	/**
 	 * This method is used to create URI used to connect the cliet to the server
 	 * passed as String in the param
@@ -118,22 +111,10 @@ public class PersonCollectionResource {
 	}
 	
 	
-	/**
-	 * This method is used to create URI used to connect the cliet to the server
-	 * passed as String in the param
-	 * 
-	 * @param conn the connection string of the server
-	 * @return 
-	 */
-	private static URI getBaseURI(String conn) {
-		return UriBuilder.fromUri(conn).build(); //my server
-		//return UriBuilder.fromUri("https://peaceful-hamlet-5616.herokuapp.com/sdelab").build(); //Andrea
-	}
-	
     /**
-     * This method is used to know the number of people
+     * This method is used to get an joke motivation phrase
      * 
-     * @return String.valueOf(count) that is a String representing the number of the people
+     * @return phrase
      */
     @GET
     @Path("/motivation")
@@ -179,11 +160,16 @@ public class PersonCollectionResource {
 		//JSONObject getValue_json = new JSONObject(getAll_json.getJSONObject("value"));
     }
     
+    
 
     /**
-     * This method is used to know the number of people
+     * This method is used to get the current weather data for one location.
      * 
-     * @return String.valueOf(count) that is a String representing the number of the people
+     * 
+     * @param city location and nation code for which get current weather data
+     * @param metric type of units to use for measure
+     * @param json type of return data
+     * @return jsonWeather 
      */
     @GET
     @Path("/weather")
@@ -221,9 +207,14 @@ public class PersonCollectionResource {
     
     
     /**
-     * This method is used to know the number of people
+     * This method is used to get weather forecast for 5 days 
+     * with data every 3 hours by city name.
      * 
-     * @return String.valueOf(count) that is a String representing the number of the people
+     * 
+     * @param city location and nation code for which get forecast weather data
+     * @param metric type of units to use for measure
+     * @param json type of return data
+     * @return jsonWeather
      */
     @GET
     @Path("/forecast")
