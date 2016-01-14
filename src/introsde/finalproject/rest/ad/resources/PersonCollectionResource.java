@@ -267,16 +267,24 @@ public class PersonCollectionResource {
         		"\n ");
         
        
-        
+        JSONObject obj = new JSONObject();
+
+        obj.put("Condition", condition_weather);
+        obj.put("Current Temperature", temperature);
+        obj.put("Temperature min", temp_min);
+        obj.put("Temperature max", temp_max);
+        obj.put("Humidity", humidity);
+        obj.put("Pressure", pressure);
+        String output_weather = obj.toString();
         
         
         if(response_weather.getStatus() != 200){
         	System.out.println("Error in external service");
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-       				.entity(externalErrorMessage(jsonWeather)).build();
+       				.entity(externalErrorMessage(output_weather)).build();
             }else{
-            	System.out.println("jsonGetRandom: " + jsonWeather );
-            	return Response.ok(jsonWeather).build();
+            	System.out.println("jsonGetRandom: " + output_weather );
+            	return Response.ok(output_weather).build();
             }
     	}catch(Exception e){
     		System.out.print("Error Cath motivation");
