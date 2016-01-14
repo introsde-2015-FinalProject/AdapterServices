@@ -328,13 +328,57 @@ public class PersonCollectionResource {
         Response response_forecast = service_forecast.request().accept(MediaType.APPLICATION_JSON).get(Response.class);
         String jsonForecast = response_forecast.readEntity(String.class);
         
+        JSONObject getAll_json = new JSONObject(jsonForecast);
+        JSONArray list = getAll_json.getJSONArray("list");
+        JSONObject getWeather = list.getJSONObject(0);
+        System.out.println(list.get(8).toString());
+        JSONObject forecast = list.getJSONObject(8);
+        
+        JSONArray forecast_weather = forecast.getJSONArray("weather");
+        JSONObject forecast_main = forecast.getJSONObject("main");
+        System.out.println("Weather: " + forecast_weather);
+        JSONObject main = forecast_weather.getJSONObject(0);
+        System.out.println("Object main: " + main);
+        
+        
+        //Description
+        String description = main.get("main").toString();
+        
+        //Data of main
+        String temperature = forecast_main.get("temp").toString();
+        String pressure = forecast_main.get("pressure").toString();
+        String humidity = forecast_main.get("humidity").toString();
+        String temp_min = forecast_main.get("temp_min").toString();
+        String temp_max = forecast_main.get("temp_max").toString();
+        
+        
+        JSONObject obj = new JSONObject();
+
+        obj.put("Condition", description);
+        obj.put("Current Temperature", temperature);
+        obj.put("Temperature min", temp_min);
+        obj.put("Temperature max", temp_max);
+        obj.put("Humidity", humidity);
+        obj.put("Pressure", pressure);
+        String output_forecast = obj.toString();
+        
+        
+        
+        
+        //System.out.println("All data: " + forecast_main);
+        
+        //System.out.println(x);
+        
+        //System.out.println("Forecast fifth element after 24hours then next days: " + forecast.toString());
+        
+        
         if(response_forecast.getStatus() != 200){
         	System.out.println("Error in external service");
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-       				.entity(externalErrorMessage(jsonForecast)).build();
+       				.entity(externalErrorMessage(output_forecast)).build();
             }else{
-            	System.out.println("jsonGetRandom: " + jsonForecast );
-            	return Response.ok(jsonForecast).build();
+            	System.out.println("jsonGetRandom: " + output_forecast );
+            	return Response.ok(output_forecast).build();
             }
     	}catch(Exception e){
     		System.out.print("Error Cath motivation");
