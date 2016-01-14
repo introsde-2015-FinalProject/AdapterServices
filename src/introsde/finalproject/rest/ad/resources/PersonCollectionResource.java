@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.*;
 import javax.persistence.EntityManager;
@@ -35,7 +36,9 @@ import javax.ws.rs.core.UriInfo;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.h2.util.IOUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.io.IOException;
 import java.net.URL;
@@ -225,6 +228,47 @@ public class PersonCollectionResource {
         
         
         String jsonWeather = response_weather.readEntity(String.class);
+        
+        JSONObject getAll_json = new JSONObject(jsonWeather);
+        JSONArray list = getAll_json.getJSONArray("list");
+        JSONObject getWeather = list.getJSONObject(0);
+        System.out.println(list.get(0).toString());
+        
+        System.out.println(getWeather.get("main").toString());
+        
+        JSONObject main = getWeather.getJSONObject("main");
+        String temperature = main.get("temp").toString();
+        String pressure = main.get("pressure").toString();
+        String humidity = main.get("humidity").toString();
+        String temp_min = main.get("temp_min").toString();
+        String temp_max = main.get("temp_max").toString();
+        
+        
+        
+        //JSONArray main = new JSONObject().getJSONArray("main");
+        
+        System.out.println(getWeather.getJSONArray("weather").getJSONObject(0).get("main").toString());
+        //JSONObject weather_condition = (JSONObject) getWeather.getJSONArray("weather").getJSONObject(0).get("main"); 
+        JSONArray x = getWeather.getJSONArray("weather");
+        JSONObject weather_condition = x.getJSONObject(0);
+        
+        
+        String condition_weather = weather_condition.get("main").toString();
+        String condition_description = weather_condition.get("description").toString();
+        
+        System.out.println(
+        		" Condition: " + condition_description +
+        		"\n weather: " + condition_weather +
+        		"\n Temperature: " + temperature + 
+        		"\n Pressure: " + pressure +
+        		"\n Humidity: " + humidity + 
+        		"\n Temperature min: " + temp_min +
+        		"\n Temperature max: " + temp_max + 
+        		"\n ");
+        
+       
+        
+        
         
         if(response_weather.getStatus() != 200){
         	System.out.println("Error in external service");
