@@ -1,60 +1,33 @@
 # AdapterServices
 
-### **@GET /motivation**
+The Adapter Service is the service that communicate with third party services. This layer gets data like weather, weather forecast and motivation phrases from external data sources. In order to interact with external services, this layer uses external API:
 
-Get motivation joke phrase of Chuck Norris used to motivate the user.
+* weather [http://openweathermap.org/current](http://openweathermap.org/current);
+* weather forecast [http://openweathermap.org/forecast5](http://openweathermap.org/forecast5);
+* motivation phrases [http://www.icndb.com/api/](http://www.icndb.com/api/).
 
-| GET https://as-enigmatic-journey-9195.herokuapp.com/sdelab/person/motivation |
-|:------------------------------------------------------------------------------|
-| Response MediaType = TEXT_PLAIN |
+[API Documentation](https://github.com/introsde-2015-FinalProject/AdapterServices/wiki/API-Documentation)  
+[URL of the server (heroku)](https://as-enigmatic-journey-9195.herokuapp.com/sdelab/)
 
-| Parameter | Description | Required? |
-|-----------|-------------|-----------|
-| N/A | N/A  | N/A |
+### Install
+In order to execute this server locally you need the following technologies (in the brackets you see the version used to develop):
 
----
+* Java (jdk1.8.0)
+* ANT (version 1.9.4)
 
-### **@GET /weather**
+Then, clone the repository. Run in your terminal:
 
-Get current weather data for one location.
+```
+git clone https://github.com/introsde-2015-FinalProject/AdapterServices.git && cd AdapterServices
+```
 
-| GET https://as-enigmatic-journey-9195.herokuapp.com/sdelab/person/weather?city=Trento,it&units=metric&mode=json |
-|:-----------------------------------------------------------------------------------------------------------------|
-| Response MediaType = TEXT_PLAIN |
+and run the following command:
+```
+ant install
+```
 
-| Parameter | Description | Required? |
-|-----------|-------------|-----------|
-| city | {Trento,it} location and nation code for which get current weather data  | YES |
-| units | {metric} type of units to use for measure  | YES |
-| mode | {json} type of return data  | YES |
-
-
----
-
-
-### **@GET /forecast**
-
-Get weather forecast for 5 days with data every 3 hours by city name.
-
-| GET https://as-enigmatic-journey-9195.herokuapp.com/sdelab/person/forecast?city=Trento,it&units=metric&mode=json |
-|:------------------------------------------------------------------------------------------------------------------|
-| Response MediaType = TEXT_PLAIN |
-
-| Parameter | Description | Required? |
-|-----------|-------------|-----------|
-| city | {Trento,it} location and nation code for which get forecast weather data  | YES |
-| units | {metric} type of units to use for measure  | YES |
-| mode | {json} type of return data  | YES |
-
-
-## Json Response for /weather and /forecast 
-```json
-{
-  "Condition": "Clouds",
-  "Temperature min": "-11.93",
-  "Humidity": "91",
-  "Current Temperature": "-11.93",
-  "Pressure": "872.9",
-  "Temperature max": "-10.48"
-}
+### Getting Started
+To run the server locally then run:
+```
+ant start
 ```
